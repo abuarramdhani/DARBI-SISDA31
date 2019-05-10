@@ -42,7 +42,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
 		$query_check_cur_siswa_finance	= mysqli_query($mysql_connect, $src_check_cur_siswa_finance) or die(mysql_error());
 		$row_check_cur_siswa_finance	= mysqli_fetch_array($query_check_cur_siswa_finance, MYSQLI_ASSOC);
 		$num_check_cur_siswa_finance	= mysqli_num_rows($query_check_cur_siswa_finance);
-		echo $src_check_cur_siswa_finance;
+		//echo $src_check_cur_siswa_finance;
 		$src_cur_tingkat 	= $row_check_cur_siswa_finance["tingkat"];
 		$src_cur_status 	= $row_check_cur_siswa_finance["kat_status_anak"];
 		
@@ -265,7 +265,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                 	<td width="10">&nbsp;</td>
                     <td>
                     <span id="text_normal_black"><h2>Detail Transaksi</h2></span>
-                    <a href="#">Detail <?PHP echo $row_select_siswa["nama_siswa"]?></>
+                    <a href="#">Detail Transaksi <?PHP echo $row_select_siswa["nama_siswa"]?></>
                     </td>
                     <td width="10">&nbsp;</td>
                 </tr>
@@ -347,6 +347,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                 <td colspan="6" height="10"></td>
                             </tr>
                         </table>
+						
                     	<table width="100%" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                             	<td bgcolor="#b9d4de" colspan="5" align="center" id="text_normal_black">&nbsp;</td>
@@ -376,12 +377,35 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                         	<td colspan="5" height="10"><a title="Show Table #1a" href="javascript:toggleDisplay('2')" id="tableHref1"><img border="0" src="images/plus.png" id="imagePM2"></a></td>
                                         </tr>
                                     </table>
+									<script language="javascript">
+										//this script is for show/hidden table function
+										imageX1='plus';
+										imageX2='plus';
+										imageX3='plus';
+										imageX4='plus';
+										imageX5='plus';
+										imageX6='plus';
+										imageX7='plus';
+
+										function toggleDisplay(e){
+										imgX="imagePM"+e;
+										tableX="table"+e;
+										imageX="imageX"+e;
+										tableLink="tableHref"+e;
+										imageXval=eval("imageX"+e);
+										element = document.getElementById(tableX).style;
+										 if (element.display=='none') {element.display='block';}
+										 else {element.display='none';}
+										 if (imageXval=='plus') {document.getElementById(imgX).src='images/minus.png';eval("imageX"+e+"='minus';");document.getElementById(tableLink).title='Hide Table #'+e+'a';}
+										 else {document.getElementById(imgX).src='images/plus.png';eval("imageX"+e+"='plus';");document.getElementById(tableLink).title='Show Table #'+e+'a';}
+										}
+									</script>
                                     <div style="display:none;" id="table2"> 
                                     <?PHP
 									$src_check_pgtka 	= "select jenjang from siswa_finance where no_sisda = '$no_sisda_enc' and periode = '$edu_year_siswa'";
+									//echo $src_check_pgtka;
 									$query_check_pgtka 	= mysqli_query($mysql_connect, $src_check_pgtka) or die(mysql_error());
 									$check_pgtka		= mysqli_fetch_array($query_check_pgtka, MYSQLI_ASSOC);
-									
 									if($check_pgtka["jenjang"] == "PG" || $check_pgtka["jenjang"] == "TK A") {
 									
 										$src_check_pgtka_nextyear 	= "select id from siswa_finance where no_sisda = '$no_sisda_enc' and periode = '$edu_year_siswa_next'";
@@ -562,7 +586,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                                         <td width="10" bgcolor="#333333"></td>
                                                         <td width="200" bgcolor="#333333" id="text_normal_white">Subtotal Daftar Ulang</td>
                                                         <td width="5"></td>
-                                                        <td width="10" bgcolor="#333333" align="left" id="text_normal_black"><input type="text" name="subtotal_daful" style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/></td>
+                                                        <td width="10" bgcolor="#333333" align="left" id="text_normal_black"><input value=0 type="text" id="subtotal_daful" name="subtotal_daful" style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/></td>
                                                         <td width="10" bgcolor="#333333">&nbsp;</td>
                                                         <td width="10">&nbsp;</td>
                                                     </tr>                                                    
@@ -656,10 +680,10 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                         	<td colspan="6" height="10"></td>
                                         </tr>		
                                         <?PHP
-										$src_check_arrear_biaya_masuk	= "select nominal_tunggakan,periode from tunggakan where no_sisda = '$no_sisda_enc' and jenis_tunggakan = 'biaya_masuk' and status = '1'";
+										$src_check_arrear_biaya_masuk	= "select id, nominal_tunggakan,periode from tunggakan where no_sisda = '$no_sisda_enc' and jenis_tunggakan = 'biaya_masuk' and status = '1' order by id desc";
 										$query_check_arrear_biaya_masuk	= mysqli_query($mysql_connect, $src_check_arrear_biaya_masuk) or die(mysql_error());
 										$num_check_arrear_biaya_masuk	= mysqli_num_rows($query_check_arrear_biaya_masuk);
-										
+										//echo $src_check_arrear_biaya_masuk;
 										if($num_check_arrear_biaya_masuk != 0) {
 										
 											$row_check_arrear_biaya_masuk = mysqli_fetch_array($query_check_arrear_biaya_masuk, MYSQLI_ASSOC);
@@ -722,44 +746,12 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                                     <tr>
                                                         <td colspan="7" height="5"></td>
                                                     </tr>
-                                                    <?PHP /*
-                                                    <tr height="30">
-                                                        <td width="10"></td>
-                                                        <td width="10" bgcolor="#718b88"></td>
-                                                        <td width="200" bgcolor="#718b88" id="text_normal_white">Tahap</td>
-                                                        <td width="5"></td>
-                                                        <td width="10" bgcolor="#718b88" align="left" id="text_normal_black">
-                                                        <select name="tahap_bima">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        </select>                                                        
-                                                        </td>
-                                                        <td width="10" bgcolor="#718b88">&nbsp;</td>
-                                                        <td width="10">&nbsp;</td>
-                                                    </tr>  
-                                                    <tr>
-                                                        <td colspan="7" height="5"></td>
-                                                    </tr>
-                                                    <tr height="30">
-                                                        <td width="10"></td>
-                                                        <td width="10" bgcolor="#718b88"></td>
-                                                        <td width="200" bgcolor="#718b88" id="text_normal_white">Lunas/Cicilan ke</td>
-                                                        <td width="5"></td>
-                                                        <td width="10" bgcolor="#718b88" align="left" id="text_normal_black"><input type="text" name="lucil_bima" onkeypress="return checkIt(event)"/></td>
-                                                        <td width="10" bgcolor="#718b88">&nbsp;</td>
-                                                        <td width="10">&nbsp;</td>
-                                                    </tr>  
-                                                    <tr>
-                                                        <td colspan="7" height="5"></td>
-                                                    </tr>
-													*/
-													?>
                                                     <tr height="50">
                                                         <td width="10"></td>
                                                         <td width="10" bgcolor="#333333"></td>
                                                         <td width="200" bgcolor="#333333" id="text_normal_white">Subtotal Biaya Masuk</td>
                                                         <td width="5"></td>
-                                                        <td width="10" bgcolor="#333333" align="left" id="text_normal_black"><input type="text" name="subtotal_bima" style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/></td>
+                                                        <td width="10" bgcolor="#333333" align="left" id="text_normal_black"><input type="text" value=0 id="subtotal_bima" name="subtotal_bima" style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/></td>
                                                         <td width="10" bgcolor="#333333">&nbsp;</td>
                                                         <td width="10">&nbsp;</td>
                                                     </tr>                                             
@@ -855,18 +847,18 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
 												} 
 												else 
 												{ 
-													echo "<h1>Selain kelas 1-5/7/8</h1>"; echo "<h1>".$src_cur_tingkat."</h1>";  
+													echo "Selain kelas 1-5/7/8"; echo "".$src_cur_tingkat;  
 												}
 												?>
                                             	<table bgcolor="#999999" border="0" cellpadding="0" cellspacing="0">
                                                     <?PHP
 													//where are going to check whether this student has any arrears or not													
-													$src_check_arrear_spp 			= "select * from tunggakan where no_sisda = '$no_sisda_enc' and jenis_tunggakan = 'spp' and (status = '1' || status = '2') order by id";
+													$src_check_arrear_spp 			= "select * from tunggakan where no_sisda = '$no_sisda_enc' and jenis_tunggakan = 'spp' and (status = '1' || status = '2')  and periode = '".$row_select_siswa["periode"]."' order by id";
 													$query_check_arrear_spp			= mysqli_query($mysql_connect, $src_check_arrear_spp) or die(mysql_error());
 													$query_check_arrear_spp_auto	= mysqli_query($mysql_connect, $src_check_arrear_spp) or die(mysql_error());
 													$num_check_arrear_spp			= mysqli_num_rows($query_check_arrear_spp);
 													
-													//echo $src_check_arrear;
+													//echo $src_check_arrear_spp;
 													//echo "<h1>$num_check_arrear</h1>";
 													if($num_check_arrear_spp != 0) {
 													?>
@@ -1121,40 +1113,13 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
 														}
 														?>
                                                         </select>
-                                                        <?PHP
-														/*
-                                                        <span style="font-size:9px; font-family:verdana; color:#ffcc00;">Gunakan tombol <b style="color:#FFFFFF;">Shift</b> untuk memilih lebih dari 1 bulan</span><br />                                                        
-                                                        <select name="bulan_catering[]" size="12" style="width: 200px" multiple="multiple">
-                                                        <option value="july">Juli	</option>
-                                                        <option value="august">Agustus</option>
-                                                        <option value="september">September</option>
-                                                        <option value="october">Oktober</option>
-                                                        <option value="november">Nopember</option>
-                                                        <option value="december">Desember</option>
-                                                        <option value="january">Januari</option>
-                                                        <option value="february">Februari</option>
-                                                        <option value="march">Maret</option>
-                                                        <option value="april">April</option>
-                                                        <option value="may">Mei</option>
-                                                        <option value="june">Juni</option>
-                                                        </select>
-														*/
-														?>
+                                                        
                                                         </td>
                                                         <td width="10" bgcolor="#617f90">&nbsp;</td>
                                                         <td>&nbsp;</td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="7" height="5"></td>
-                                                    </tr> 
-                                                    <tr>
-                                                    	<td width="10"></td>
-                                                        <td width="10" bgcolor="#617f90"></td>
-                                                        <td width="200" bgcolor="#617f90" id="text_normal_white">SPP (nominal)</td>
-                                                        <td width="5" bgcolor="#617f90"></td>
-                                                        <td width="10" bgcolor="#617f90" align="left"><input type="text" name="nom_spp" onkeypress="return checkIt(event)" onChange="MakeSum();" onFocus="MakeSum();" style="font-weight:bold; color:#33CC00; font-size:14px;"/></td>
-                                                        <td width="10" bgcolor="#617f90">&nbsp;</td>
-                                                        <td>&nbsp;</td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6" height="5"></td>
@@ -1164,7 +1129,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                                         <td width="10" bgcolor="#333333"></td>
                                                         <td width="200" bgcolor="#333333" id="text_normal_white">Subtotal SPP</td>
                                                         <td width="5" bgcolor="#333333"></td>
-                                                        <td width="10" bgcolor="#333333" align="left"><input type="text" name="subtotal_spp"  style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/></td>
+                                                        <td width="10" bgcolor="#333333" align="left"><input readonly="readonly" value=0 id="nom_spp" type="text" name="nom_spp" onkeypress="return checkIt(event)" onChange="MakeSum();" onFocus="MakeSum();" style="font-weight:bold; color:#33CC00; font-size:14px;"/></td>
                                                         <td width="10" bgcolor="#333333">&nbsp;</td>
                                                         <td>&nbsp;</td>
                                                     </tr>
@@ -1205,33 +1170,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                                  </table>
                                             </td>
                                             <td>&nbsp;</td>
-                                        </tr>
-                                        <?PHP
-										/*
-                                        <tr>
-                                            <td colspan="6" height="5"></td>
-                                        </tr>
-                                        <tr height="20">
-                                            <td></td>
-                                            <td bgcolor="#999999"></td>
-                                            <td bgcolor="#999999" id="text_normal_white">Kekurangan</td>
-                                            <td></td>
-                                            <td align="left"><input type="text" name="kekurangan_spp" onkeypress="return checkIt(event)"/></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6" height="5"></td>
-                                        </tr>
-                                        <tr height="20">
-                                            <td></td>
-                                            <td bgcolor="#999999"></td>
-                                            <td bgcolor="#999999" id="text_normal_white">Pembayaran berikutnya</td>
-                                            <td></td>
-                                            <td align="left" id="text_normal_black"><select name="tanggal_bayar_berikut_spp"><?PHP include("include/cur_date_opt.php"); ?></select><select name="bulan_bayar_berikut_spp"><?PHP include("include/cur_month_opt.php"); ?></select><select name="tahun_bayar_berikut_spp"><?PHP include("include/cur_year_opt.php"); ?></select></td>
-                                            <td>&nbsp;</td>
-                                        </tr> 
-										*/ 
-										?>                           
+                                        </tr>                    
                                         <tr>
                                             <td colspan="6" height="10"></td>
                                         </tr>
@@ -1636,7 +1575,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                                         <td width="10" bgcolor="#333333"></td>
                                                         <td width="200" bgcolor="#333333" id="text_normal_white">Subtotal catering</td>
                                                         <td width="5" bgcolor="#333333"></td>
-                                                        <td width="10" bgcolor="#333333" align="left"><?PHP //echo "<h1>subtotal_catering</h1>"; ?><input type="text" name="subtotal_catering"  style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly" /></td>
+                                                        <td width="10" bgcolor="#333333" align="left"><?PHP //echo "<h1>subtotal_catering</h1>"; ?><input type="text" value=0 id="subtotal_catering" name="subtotal_catering"  style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly" /></td>
                                                         <td width="10" bgcolor="#333333">&nbsp;</td>
                                                         <td>&nbsp;</td>
                                                     </tr>
@@ -1908,25 +1847,6 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
 														}
 														?>
                                                         </select>
-                                                        <?PHP
-														/*
-                                                        <span style="font-size:9px; font-family:verdana; color:#ffcc00;">Gunakan tombol <b style="color:#FFFFFF;">Shift</b> untuk memilih lebih dari 1 bulan</span><br />                                                        
-                                                        <select name="bulan_catering[]" size="12" style="width: 200px" multiple="multiple">
-                                                        <option value="july">Juli	</option>
-                                                        <option value="august">Agustus</option>
-                                                        <option value="september">September</option>
-                                                        <option value="october">Oktober</option>
-                                                        <option value="november">Nopember</option>
-                                                        <option value="december">Desember</option>
-                                                        <option value="january">Januari</option>
-                                                        <option value="february">Februari</option>
-                                                        <option value="march">Maret</option>
-                                                        <option value="april">April</option>
-                                                        <option value="may">Mei</option>
-                                                        <option value="june">Juni</option>
-                                                        </select>
-														*/
-														?>
                                                         </td>
                                                         <td width="10" bgcolor="#87778a">&nbsp;</td>
                                                         <td>&nbsp;</td>
@@ -1954,7 +1874,7 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                                         <td width="200" bgcolor="#333333" id="text_normal_white">Total Antar jemput</td>
                                                         <td width="5" bgcolor="#333333"></td>
                                                         <td width="10" bgcolor="#333333" align="left">
-                                                        <?PHP //echo "<h1>subtotal_antar_jemput</h1>"; ?><input type="text" name="subtotal_antar_jemput"  style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly" />
+                                                        <?PHP //echo "<h1>subtotal_antar_jemput</h1>"; ?><input type="text" value=0 id="subtotal_antar_jemput" name="subtotal_antar_jemput"  style="height:40px; font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly" />
                                                         </td>
                                                         <td width="10" bgcolor="#333333">&nbsp;</td>
                                                         <td>&nbsp;</td>
@@ -2032,7 +1952,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td width="10" bgcolor="#999999"></td>
                                             <td width="200" bgcolor="#999999" id="text_normal_white">Zakat Mal</td>
                                             <td width="5"></td>
-                                            <td width="10" align="left"><input type="text" name="zakat_mal_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" /></td>
+                                            <td width="10" align="left">
+												<input type="text" id="zakat_mal_ruba" value=0 name="zakat_mal_ruba" onkeypress="return checkIt(event)" onKeyUp="MakeSum();" />
+												</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2043,7 +1965,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#999999"></td>
                                             <td bgcolor="#999999" id="text_normal_white">Zakat Profesi</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="zakat_profesi_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" /></td>
+                                            <td align="left">
+												<input type="text" id="zakat_profesi_ruba" value=0 name="zakat_profesi_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" />
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2054,7 +1978,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#999999"></td>
                                             <td bgcolor="#999999" id="text_normal_white">Infaq/Shodaqoh</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="infaq_sho_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" /></td>
+                                            <td align="left">
+												<input type="text" id="infaq_sho_ruba" value=0 name="infaq_sho_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" />
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2065,7 +1991,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#999999"></td>
                                             <td bgcolor="#999999" id="text_normal_white">Wakaf</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="wakaf_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();"/></td>
+                                            <td align="left">
+												<input type="text" id="wakaf_ruba" value=0 name="wakaf_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();"/>
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2076,7 +2004,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#999999"></td>
                                             <td bgcolor="#999999" id="text_normal_white">Zakat Fitrah</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="zakat_fitrah_ruba"  onkeypress="return checkIt(event)"  onKeyUp="MakeSum();"/></td>
+                                            <td align="left">
+												<input type="text" id="zakat_fitrah_ruba" value=0 name="zakat_fitrah_ruba"  onkeypress="return checkIt(event)"  onKeyUp="MakeSum();"/>
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2087,7 +2017,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#999999"></td>
                                             <td bgcolor="#999999" id="text_normal_white">Fidyah</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="fidyah_ruba"  onkeypress="return checkIt(event)"  onKeyUp="MakeSum();"/></td>
+                                            <td align="left">
+												<input type="text" id="fidyah_ruba" value=0 name="fidyah_ruba"  onkeypress="return checkIt(event)"  onKeyUp="MakeSum();"/>
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2098,7 +2030,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#999999"></td>
                                             <td bgcolor="#999999" id="text_normal_white">Baksos Ramadhan</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="baksos_ramadhan_ruba"  onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" /></td>
+                                            <td align="left">
+												<input type="text" id="baksos_ramadhan_ruba" value=0 name="baksos_ramadhan_ruba"  onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" />
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2109,7 +2043,9 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#999999"></td>
                                             <td bgcolor="#999999" id="text_normal_white">Qurban</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="qurban_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" /></td>
+                                            <td align="left">
+												<input type="text" id="qurban_ruba" value=0 name="qurban_ruba" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" />
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -2120,9 +2056,28 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td bgcolor="#333333"></td>
                                             <td bgcolor="#333333" id="text_normal_white">Subtotal</td>
                                             <td></td>
-                                            <td align="left"><input type="text" name="subtotal_ruba"  style="font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/></td>
+                                            <td align="left">
+												<!--<input type="text" name="subtotal_ruba"  style="font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/>-->
+												<input type="text" id="subtotal_ruba" value=0 name="subtotal_ruba" readonly="readonly" onkeypress="return checkIt(event)" onChange="MakeSum();" onFocus="MakeSum();" style="font-weight:bold; color:#33CC00; font-size:14px;"/>
+											</td>
                                             <td>&nbsp;</td>
-                                        </tr>                                        
+                                        </tr>        
+										<script>
+											//iMa : anehnya g ngebaca makesum yg dibawah...
+											function MakeSum()
+											{
+													zm=parseInt(document.getElementById("zakat_mal_ruba").value);
+													zp=parseInt(document.getElementById("zakat_profesi_ruba").value);
+													is=parseInt(document.getElementById("infaq_sho_ruba").value);
+													wak=parseInt(document.getElementById("wakaf_ruba").value);
+													zf=parseInt(document.getElementById("zakat_fitrah_ruba").value);
+													fid=parseInt(document.getElementById("fidyah_ruba").value);
+													bakram=parseInt(document.getElementById("baksos_ramadhan_ruba").value);
+													qur=parseInt(document.getElementById("qurban_ruba").value);
+													document.getElementById("subtotal_ruba").value = zm + zp + is + wak + zf + fid + bakram + qur; 
+													document.getElementById("totalnya").value=parseInt(document.getElementById("nom_spp").value) + parseInt(document.getElementById("subtotal_ruba").value);
+											}
+										</script>										
                                         <tr>
                                             <td colspan="6" height="5"></td>
                                         </tr>                                        
@@ -2151,86 +2106,11 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                         </tr>
                                     </table>
                                     <div style="display:none;" id="table7">
-                                	<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff"> 
-                                     	<tr>
-                                        	<td colspan="6" height="10"></td>
-                                        </tr>  
-                                        <tr>
-                                        	<td width="10"></td>
-                                            <td width="10" bgcolor="#003366"></td>
-                                            <td width="200" bgcolor="#003366" id="text_normal_white">Keterangan School Support<br />[diisi jika perlu]</td>
-                                            <td></td>
-                                            <td align="left"><textarea name="ket_schspt" cols="22" rows="3"></textarea></td>
-                                            <td>&nbsp;</td>
+									<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">  
+                                    	<tr>
+                                        	<td height="10" colspan="6"><a href="#" style="padding-left: 10px;">Insert School Support</a></td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="6" height="5"></td>
-                                        </tr>
-                                        <tr height="20">
-                                            <td width="10"></td>
-                                            <td width="10" bgcolor="#003333"></td>
-                                            <td width="200" bgcolor="#003333" id="text_normal_white">Lain-lain (nama item / nominal)</td>
-                                            <td></td>
-                                            <td align="left"><input type="text" name="nama_addition_item_schspt" /> / <input type="text" name="nominal_addition_item_schspt" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();"/></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6" height="5"></td>
-                                        </tr>
-                                    	<?PHP
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										//Believe me that this really, really, really serious and important
-										//Read this carefully.........
-										//Once you've created/inserted data in table school_support,
-										//You have to keep it. I mean it's about item name and their id.
-										//Once you,ve changed the sequence of the item or their id or both of them in the same time, You've broken all of it.
-										//You've broken the other use of this table in the future.
-										//Because of what?
-										//Because the data of this table will be used sequentially....
-										//So, you have to keep it as the first time you made this data..
-										//And about an addition data for the item, it's okay, no problem at all.
-										//The point is, YOU MAY NOT CHANGE TABLE SCHOOL_SUPPORT MANUALLY. 
-										//It will impact to other process
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										////////////////////////////////////////////////////////////////
-										$src_get_schspt		= "select * from school_support";
-										$query_get_schspt1	= mysqli_query($mysql_connect, $src_get_schspt) or die(mysql_error());
-										$query_get_schspt2	= mysqli_query($mysql_connect, $src_get_schspt) or die(mysql_error());
-										
-										$i_sch_sup = 1;
-										while($get_schspt1	= mysqli_fetch_array($query_get_schspt1, MYSQLI_ASSOC)) {
-										
-										?>                                    	       	
-                                        <tr height="20">
-                                            <td width="10"></td>
-                                            <td width="10" bgcolor="#999999"></td>
-                                            <td width="200" bgcolor="#999999" id="text_normal_white"><?PHP echo $get_schspt1["item"];  ?></td>
-                                            <td width="5"></td>
-                                            <td align="left"><input type="text" name="sch_sup_<?PHP echo $i_sch_sup++; ?>_schspt" onkeypress="return checkIt(event)"  onKeyUp="MakeSum();" /></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6" height="5"></td>
-                                        </tr>
-                                     	<?PHP										
-										}
-										?>                                    	
-                                        <tr height="20">
-                                            <td width="10"></td>
-                                            <td width="10" bgcolor="#333333"></td>
-                                            <td width="200" bgcolor="#333333" id="text_normal_white">Subtotal</td>
-                                            <td></td>
-                                            <td align="left" id="text_normal_black"><input type="text" name="subtotal_schspt"  style="font-weight:bold; color:#FF6600; font-size:14px;" readonly="readonly"/></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                     </table>     
+                                     </table> 
                                      </div>
                                      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">  
                                     	<tr>
@@ -2251,7 +2131,10 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td width="10"></td>
                                             <td width="50" id="text_normal_black" align="left"><h2>Total</h2></td>
                                             <td width="10"></td>
-                                            <td align="left" id="text_normal_black"><input type="text" name="totalnya" style="font-weight:bold; font-size:18px; color:#FF6600;"  id="totalnya" onhaschange="numberFormat(this,'.','Rp. ',',00-')"></td>
+                                            <td align="left" id="text_normal_black">
+												<!--<input type="text" name="totalnya" style="font-weight:bold; font-size:18px; color:#FF6600;"  id="totalnya" onhaschange="numberFormat(this,'.','Rp. ',',00-')"> -->
+												<input type="text" id="totalnya" value=0 readonly="readonly" on="totalAll()" name="totalnya" style="font-weight:bold; font-size:18px; color:#FF6600;"  id="totalnya" onhaschange="numberFormat(this,'.','Rp. ',',00-')">
+											</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr height="20">
@@ -2267,9 +2150,37 @@ if(isset($_SESSION["id"]) && ($_SESSION["privilege"] == "2")) {
                                             <td width="10"></td>
                                             <td width="50" id="text_normal_black" align="left"><h2>Kembali</h2></td>
                                             <td width="10"></td>
-                                            <td align="left" id="text_normal_black"><input type="text" name="kembali" style="font-weight:bold; font-size:18px; color:#669933;"  id="kembali" onhaschange="numberFormat(this,'.','Rp. ',',00-')"></td>
+                                            <td align="left" id="text_normal_black"><input type="text" name="kembali" style="font-weight:bold; font-size:18px; color:#669933;" onMouseOver="totalAll()"  id="kembali" onhaschange="numberFormat(this,'.','Rp. ',',00-')"></td>
                                             <td>&nbsp;</td>
                                         </tr>
+										<script>
+											function totalAll()
+											{
+												daful=0;
+												bima=0;
+												spp=0;
+												ruba=0;
+												if(document.getElementById("subtotal_daful") != null)
+												{
+													daful = parseInt(document.getElementById("subtotal_daful").value);
+												}
+												if(document.getElementById("subtotal_bima") != null)
+												{
+													bima = parseInt(document.getElementById("subtotal_bima").value);
+												}
+												if(document.getElementById("nom_spp") != null)
+												{
+													spp = parseInt(document.getElementById("nom_spp").value);
+												}
+												if(document.getElementById("subtotal_ruba") != null)
+												{
+													ruba = parseInt(document.getElementById("subtotal_ruba").value);
+												}
+												//alert(m);
+												document.getElementById("totalnya").value=daful + bima + spp + ruba;
+											}
+												
+										</script>
                                         <tr>
                                             <td colspan="6" height="5"></td>
                                         </tr> 
@@ -2351,6 +2262,7 @@ function update_spp() {
 	}
 	
 	document.transaksi.nom_spp.value = intNumber;
+	document.getElementById("totalnya").value = parseInt(document.getElementById("totalnya").value) + parseInt(intNumber);
 	
 }
 
@@ -2576,7 +2488,7 @@ function checkIt(evt)
 }
 </SCRIPT>
 
-<script language="JavaScript"> 
+<script> 
 <!-- 
 
 function AddIfValid(field) { 
@@ -2590,6 +2502,7 @@ function AddIfValid(field) {
 } 
 
 function MakeSum() { 
+	alert("original function");
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	/*

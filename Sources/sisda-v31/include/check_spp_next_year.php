@@ -14,7 +14,7 @@ if($do_check_spp_next_year == "ok") {
 	//Nah ini kita cek apakah data tunggakan spp untuk tahun depan udah dibuat apa belom, jangan-jangan udah
 	$src_check_spp_tunggakan_next_year 		= "select id from tunggakan where no_sisda = '$no_sisda_enc' and periode = '$edu_year_siswa_next' and jenis_tunggakan = 'spp'";
 	$query_check_spp_tunggakan_next_year	= mysqli_query($mysql_connect, $src_check_spp_tunggakan_next_year) or die(mysql_error());
-	$num_check_spp_tunggakan_net_year		= mysql_num_rows($query_check_spp_tunggakan_next_year);
+	$num_check_spp_tunggakan_net_year		= mysqli_num_rows($query_check_spp_tunggakan_next_year);
 	
 	if($num_check_spp_tunggakan_net_year	 == 0) {
 ?>
@@ -47,14 +47,14 @@ if($do_check_spp_next_year == "ok") {
 		
 		$src_get_tahun_masuk 	= "select periode from siswa where no_sisda = '$no_sisda_enc'";
 		$query_get_tahun_masuk	= mysqli_query($mysql_connect, $src_get_tahun_masuk) or die(mysql_error());
-		$get_tahun_masuk		= mysql_fetch_array($query_get_tahun_masuk);
+		$get_tahun_masuk		= mysqli_fetch_array($query_get_tahun_masuk, MYSQLI_ASSOC);
 		$tahun_masuk			= $get_tahun_masuk["periode"];
 		
 		$src_ket_disc = substr($tahun_masuk,2,2).substr($tahun_masuk,9,2);
 		
 		$src_check_set_spp 		= "select nominal,item_byr from set_spp where periode = '$edu_year_siswa_next' and ket_disc = '$src_ket_disc' and tingkat = '$src_next_tingkat_spp'";
 		$query_check_set_spp	= mysqli_query($mysql_connect, $src_check_set_spp) or die(mysql_error());
-		$num_check_set_spp		= mysql_num_rows($query_check_set_spp);
+		$num_check_set_spp		= mysqli_num_rows($query_check_set_spp);
 		
 		//echo $src_check_set_spp."<br>";
 		
@@ -65,7 +65,7 @@ if($do_check_spp_next_year == "ok") {
 			$set_spp_for_kts = "";
 			$set_spp_for_ler = "";
 		
-			while($check_set_spp = mysql_fetch_array($query_check_set_spp)) {
+			while($check_set_spp = mysqli_fetch_array($query_check_set_spp, MYSQLI_ASSOC)) {
 			
 				if($check_set_spp["item_byr"] == "spp") { $set_spp_for_spp = $check_set_spp["nominal"]; }
 				if($check_set_spp["item_byr"] == "ict") { $set_spp_for_ict = $check_set_spp["nominal"]; }
@@ -94,7 +94,7 @@ if($do_check_spp_next_year == "ok") {
 		////// cek bu fitri apa sudah tentukan persen bayar untuk anak guru tahun ajaran depan
 		$src_get_persen_spp 	= "select * from persen_bayar where periode = '$edu_year_siswa_next'";
 		$query_get_persen_spp	= mysqli_query($mysql_connect, $src_get_persen_spp) or die(mysqli_query($mysql_connect, ));
-		$num_get_persen_spp		= mysql_num_rows($query_get_persen_spp);
+		$num_get_persen_spp		= mysqli_num_rows($query_get_persen_spp);
 		
 		if($num_get_persen_spp == 0)  {
 	?>	
