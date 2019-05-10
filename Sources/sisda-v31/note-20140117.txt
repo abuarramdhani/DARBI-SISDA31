@@ -1,0 +1,187 @@
+==================================================================================================================================================================
+== 2014 - 01 - 17 ==
+==================================================================================================================================================================
+
+##### Daftar ulang siswa TKA
+##### Daftar ulang siswa TKB
+
+
+
+##### kegiatan
+##### peralatan
+##### seragam
+
+
+##### di biaya masuk -> cabut yang spp juli pindah ke SPP
+
+
+#####tambah Elearning di SPP.
+
+
+##### di next page reg/daf ula/naik kelas,... munculkan ICT & elearning.\
+
+##### edit SPP error
+
+
+##### cabut yang discount category yg 4 biji.
+
+##### abank tujuan: BJBS
+ 
+##### Periode halaman siswa naik kelas, harus sesuai dengan jumlah tahun kelas tertinggi (kelas 6)
+
+
+##### DIscount category bukan 1,2,3,4 tapi cuma 2 -> anak guru dan umum
+
+
+
+Setting administrasi biaya masuk -> jika tidak diisi maka harus 0
+
+
+
+
+
+<br /><b>Notice</b>:  Undefined variable: nominal_kts in <b>F:\xampp\htdocs\sisda-v3\page\page_reg_adm_siswa_next.php</b> on line <b>535</b><br />0
+
+
+
+==================================================================================================================================================================
+== 2014 - 01 - 21 ==
+==================================================================================================================================================================
+
+Tagihan bisa di print kapan saja (biasa tanggal 15 untuk diingatkan untuk yang belum bayar)
+Duplikasi input pembayaran, counter?
+Biaya masuk (PMB), sisa pembayarannya akan dianggap tunggakan dan kan ditagihkan pada bulan berikutnya
+
+
+semua School support akan keluar sisa tagihannya, selama ia belum dibayarkan
+history tunggakan dibuat untuk SPP 
+
+PG to TKA -> siswa dari darbi berarti daftar ulang
+To TKA dari luar darbi berati PMB
+
+
+==================================================================================================================================================================
+== 2014 - 01 - 23 ==
+==================================================================================================================================================================
+
+1. transaksi -> jika ada murid bayar 1 tahun penuh, lintas tahun ajaran ( harusnya tidak bisa, karena nominal SPP untuk tahun berikutnya itu belum di tetapkan.)
+
+
+
+2. SPP ambil berapa yang harus dibayarkan itu dari tabel tunggakan, nominal tunggakan liatnya. bukan lagi dari siswa finance. nah siswa finance itu cuma pas pertama kali aja.
+
+
+3. cara tahu ada sisiwa yang bayar lebih dari bulan sekarang (bayar bulan kedepan) -> hubungannya sama mau tahu total kelebihan uang.
+
+
+4. periksa proc_rec_adm_siswa -> itu current yearnya ikut di cek apa nggak? jangan-jangan cuma bulannya doang? sebab untuk siswa naik kelas, itu tahunnya kan dah nambah satu, bukan tahun pas pendaftaran. misalnya si admin tekan tombol naik kelas pada bulan juni awal, artinya kan dia memasukan dat tunggakan untuk tahun depannya ( start on july)... nah trus klo kontrol bulan spp belom datang itu pengaruh gak??itukan tahun depan...
+
+
+
+==================================================================================================================================================================
+== 2014 - 02 - 06 ==
+==================================================================================================================================================================
+
+
+
+1. Untuk siswa naik kelas, ada kemungkinan - bahkan hampir pasti - datanya akan dimasukkan sebelum tahun ajarannya datang.
+nah ini awas ini, jangan sapai ngaco di table tunggakannya. coba perhatikan ada status aktif ditable siswa_finance..? itu di update jadi 0nya gimana?
+
+##### SPP setting, auto incrementnya belum di kasih reset.
+
+3. Biaya KS, fleksible bisa 50% bisa full 100%,... nah loh gurbrak.... ntar dulu yah... reg siswa baru/naik kelas)...? tanya bu Fitri
+
+##### setting adminsitrasi siswa dibuat otomatis tidak bisa jika ternyata sudah dsetting untuk tahun ajaran tersebut
+
+##### Naik kelas siswa, di counter tidak bisa, jika ternyata SPPnya belum dibuat.
+
+6. katering bisa fleksibel jumlah harinya, tapi dirubahnya hanya pas di transaksi aja. misal 100rb buat 20 hari. tapi kenyataannya anak A mau ikut cuma 19 hari aja.... jadi di anak itu aja yang tagihannya perbulan itu jadi 19 paket aja...
+
+
+##### naik kelas, klo jumlah siswa dari kelas sebelumnay 0 siswa, system tak mau memproseslah........
+
+8. Penting nih.... perubahan status aktifdi siswa finance gimana nih? seharusnya dia cuma sebagai informasi bahwa ia aktif jika sesuai dengan periode tahun ajarannya. tidak dalam kontek transaksi. sebab bisa saja seorang murid (sering bahakan) nunggak hingga berbeda tahun ajaran. artinya apa? data siswa finance untuk tahun sebelumnya (harusnya status aktifnya sudah jadi 0) tetap dibutuhkan.
+
+
+menu Set spp jika tahun tertentu sudah disetting maka secara otomatis tidak keluar lagi dong itunya. tahunnya okeh? yang dirubah yang dihalaman include
+
+
+================================================================ 24 02 2014==========
+=====================================================================================
+
+- Delete bank belum
+- delete cataj belum
+- Status siswa di siswa_finance kenapa 1 semua? harusnya klo naik kelas dia kan jadi 0?
+-priview all siswa.. form nya salah action
+- proc_add_del_catering, itu kalau di delete, harusnyanya di cek dulu, pada bulan tersebut ada tunggakan apa nggak. sebab klo di delete artinya kan di reset ,otomatis jika ia ada tunggakan catering pada bulan tersebut maka tunggakannya akan terhapus, dan di tagihan akan hilang. nanti dirubah coy..............
+
+
+================================================================ 12 03 2014 ========
+====================================================================================
+
+- Statistik/trend progress transaksi seluruh periode
+
+=======================================================================================================================
+=======================================================================================================================
+=======================================================================================================================
+================     ok ini adalah konvensi untuk status tunggakan:  				=======================
+================                                                     				=======================
+================     0: bulan transaksi belum datang                 				=======================
+================     1: bulan transaksi sudah datang belum di bayar    				=======================
+================     2: bulan transaksi sudah terlewat 1 bulan dan belum di bayar (tunggakan)	=======================
+================     3: nominal dengan kasus khusus                     			=======================
+================     4: tidak ada tagihan                       				=======================
+================     5: sudah dibayar tepat waktu                           			=======================
+================     6. sudah dibayar terlambat   						=======================
+================     7: bayar sebelum masuk waktu tagihan           				=======================
+=======================================================================================================================
+=======================================================================================================================
+=======================================================================================================================
+
+======================================================================================
+======================================================================================
+======================================================================================
+
+
+- untuk data catering dan antar jemput, pada halaman 'catering', 'antar jemput' dan halaman 'Edit jumlah hari catering & antar jemput per siswa' itu seluruh data siswa yag ada di database akan ditampilkan. sedangkan data-data yang sebelumnya boleh jaid sudah tidak dibutuhkan. gimana nih? tampilakn semua terus di batasi oelh paging, atau langsung dishortir dari database, tahun yang udah lewat gak usah ditampilkan (tapi klo ada tagihan??? )/(tapikan tagihan tahun lalu gak akan bisa diedit lagi harusnya)
+
+- proc_reg_adm_siswa.php --> harusnya di cek dulu bahwa data mandatory harus terisi semua. terutama data keuangannya. misal spp, biaya masuk dsb. baru bisa diproses. kemarin gak tau kenapa ke add, padahal datanya kosong sama sekali. jadi disiswa. gak ada isinya.
+
+- Halaman catering/antar jemput/ anatau ayng lainnya, jika belum ada record (n=0) maka dikasih notifikasi: "data tidak ditemukan", atau yang sejenisnya dengan itu
+
+
+============================================================== 04 04 2014 ============
+======================================================================================
+INI PENTEEEEEEEEEEEEEEEEEEEEEEENGGGGGGGGGGGGGGG
+
+###### bikin function checker apakah time di server berubah, apa tidak, pastikan bahwa dia berjalan squential nambah perbulan.
+klo ternyata longkap dari februari ke april (maret ilang) berhentikan system. terutama janga jalankan file include/check_spp_arrear.
+
+- engine/proc_cataj_num_day.php masih ada error rerpotnay tapi, function jalan properly.
+
+
+============================================================== 29 04 2014 ============
+======================================================================================
+- check di proc/proc_add_del_antar_jemput.php dan proc_add_del_catering.php kenapa ada status payment 2 digambung dengan 4,5,6 (baris ke 388)
+- kemudian status 7 belum dimasukan. 
+
+============================================================== 06 05 2014 ============
+======================================================================================
+- Di tunggakan ya, itu catering (antar jemput nggak), seharusnya baru keluar angkanya jika sudah keluar jumlah harinya, yaitu yang ditentukan oleh admin (bu fitri/pak bagio). Jadi gak serta merta otomatis, langsung terupdate dari halaman include/check_spp_arrear.php. mesti di revisi nih.. salah euy....
+
+============================================================== 12 05 2014 ============
+======================================================================================
+- Page/transasction, in case ada salah satu item pembayaran yang diisi, maka seharusnya field bayar yang dibawah di counter untuk tidak boleh kosong.
+iya toh??????? 
+- No transaksi, belum ada nih, yang di tambahkn check digit itu lo....
+
+============================================================== 22 05 2014 ============
+======================================================================================
+daftar ulang masih belum jalan, 
+proc_reg_nextclass_adm_siswa_group.php
+
+Tapi, untuk table tunggakan, nom_pengembangan, nom_kegiatan dsb sih udah di tulis sih... tapi coba deh jalan gak?
+
+============================================================== 05 06 2014 ============
+======================================================================================
+Validasi untuk seluruh field di halaman transaksi yang memang harus valid, di cek kembali. jangan sampai ada yang tidak jalan. buat juga counter untuk di PHPnya supaya jangan di proses klo ada data yang tidak lengkap. klo dah masuk ke database.. bisa kacau.

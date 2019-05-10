@@ -1,0 +1,78 @@
+1. *******count gak jalan karena setting bulan cataj belum disetting
+2. ******* rekap,...bulan bayar belum didefeinisikan
+3. SPP, counter nominal tidak sama denga yang seharusnya dibayar,.. misal seharunya 550000, tapi dibayar 530000
+4. *******untuk siswa baru asal darbi, misal dari toddler ke PG, TK B ke SD, SD ke SMP, maka di form akan dimunculkan form pilihan no_sisda
+5. periode, gelombang test, tahap 1 dan tahap 2 masuk ke siswa_finance	
+6. Tahap 1 & tahap 2 masih error (data siswa)	
+7. ******* di adm_rek_siswa di tambah field tanggal mulai belajar(bulan). hubungannya sama siswa pindahan yang masuk tidak di awal tahun. cuma dia ditentukannya bisa dari tahun sebelumnya	
+8. ******* awal januari, terus tahun berjalan sampai lewat ke januari tahun berikutnya, nah itu kenapa status january dari awalnya (0-350000) menjadi (1-) saja	yang 350000nya eknapa hilang
+9. SPP jika input salah bulannya,... harusnya otomatis membenarkan sesuai bulan terakhir yang belum dibayarkan baik maju atau mundur. (kalau tidak sesuai dengan bulannya gagalkan)
+10. export to excel...
+11. yang sudah terbayar tidak bleh di dublikasi pembayaran, spp, catering & antar jemput.
+    (gak boleh kelongkap & gak boleh mundur....)
+12. ****** di adm_reg_siswa. ci counter untuk daftar dibawah current date
+13. antisipasi duplikasi data keuangan baik dari daftar baru atau dari naik kelas.
+14. kalau data biaya administrasi dan spp untuk tahun bersangkutan eblum dibuat maka, system wajib menolak pendaftaran. ini di reg_adm-siswa_next.php
+
+15. field input no transaksi transfer. kalau transfer via bank... 
+16. di SPP/catering/aj  tidak jadi bayar, di bulan ada opsi blank.
+17. pop up detail transsaksi.
+18. Tambah field SPP khusus (umum/anak guru), discountnya di bebankan kepada SPP, bukan ks, eleaning dan ict (boleh 0 rupiah yah...)
+
+
+
+/////////////////////
+19. in case salah masukan kelas (tingkat/jenjang), ada hubngannya dengan keuangan nih (SPP/bima/daful).. nah cara editnya gimana? harusnya jangan pakai tembak langsung database, tapi sediakan fom updatenya.
+
+20. categori administrasi terserah mau beraoa aja ada di halaman ad siswa adm next, tambahkan
+
+21. untuk daftar ulang, dia didaftarkan pas bayar, tidak nunggu nai kelas. data ambil otomastis dari database adm biaya masuk. nah nanti pas naik kelas dia update sppnya.
+
+Monk3y(40)
+
+
+Notice: Undefined variable: next_spp in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 377
+
+Notice: Undefined variable: next_ict in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 378
+
+Notice: Undefined variable: next_kts in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 379
+
+Notice: Undefined variable: next_ler in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 381
+
+Notice: Undefined variable: next_ict in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: next_spp in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: next_kts in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: next_ler in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: next_spp in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 377
+
+Notice: Undefined variable: next_ict in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 378
+
+Notice: Undefined variable: next_kts in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 379
+
+Notice: Undefined variable: next_ler in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 381
+
+Notice: Undefined variable: next_ict in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: next_spp in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: next_kts in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: next_ler in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 421
+
+Notice: Undefined variable: v in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 480
+
+Notice: Undefined variable: no_sisda in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 480
+
+Notice: Undefined variable: n in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 480
+
+Notice: Undefined variable: j in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 480
+
+Notice: Undefined variable: send_periode in F:\xampp\htdocs\sisda-v31\engine\proc_reg_nextclass_adm_siswa_group.php on line 480
+	
+
+Registrasi Administrasi Siswa naik kelas berhasil	
+klik disini jika Anda tidak berpindah kehalaman berikutnya

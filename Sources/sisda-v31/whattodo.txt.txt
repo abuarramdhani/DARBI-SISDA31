@@ -1,0 +1,45 @@
+0. PENTINGGGGGGGGGGGGGGGGGGGGGGGG (20130122) - untuk halaman http://localhost/sisda-v3/mainpage.php?pl=cat_adm_bi_ma_setting_frame
+   harus dipastikan tidak ada proses delete from database (phpmyadmin) directly.... dijamin akan hancurlah proses penginputan. kalau mau yah...pakai menu empty di phpmyadmin,..tapi hasilnya tabel itu akan kosong. but it's ok, nothing trouble will happen.
+
+
+
+1. (###SOLVED###)(spp_sd_setting 22112012) Waktu buat value SPP di http://localhost/sisda-v3/mainpage.php?
+   pl=spp_sd_setting, Jika ternyata tahun ajaran tersebut sudah ada, seharusnya bisa dicounter pada 
+   saat refresh pas 
+   selection tahun. sementara ini baru tercounter setelah tombol submit di klik. masa user kudu 
+   melengkapi dulu seluruh isi form, dan baru ke detect di penghujung,,.... cape deh... harus di 
+   awal sudah kedetect kalau proses itu tidak perlu dilakukan lagi
+
+2. (spp_sd_setting 22112012) Stupid thing that you've done is when you change your pattern from        1_per1_spp to 1-per1-spp.    Now you're really in a big trouble, because JS executes it as a    function, not a variable name.    Modar koe.... ((ok i've been checked ths problem. It's if we want to process it in JS, but
+
+3. (spp_sd_setting 22112012) Counter setiap field harus integer.
+
+4. (22112012)spp_sd_setting, spp_toddler_setting, spp_smp_setting, spp_tk_setting, lihat point 1,2 dan 3
+
+5. (22112012)Label halaman di tiap halaman tambahkan kata "halaman : 1 2 3 4 5 6"
+
+6. (index.php) redirect ke halaman homepage, jika user sudah teregister di session
+
+7 (http://localhost/sisda-v3/mainpage.php?pl=preview_adm_siswa 22112012) kenapa hasil query dimulai dri record no 2? record pertama tidak tampil
+
+
+///////////////////
+
+8. (page_reg_adm_siswa.PHP 23112012)stat_sekolah_asal gak muncul di database
+
+9. database table siswa -> kel_sau apa maksudnya. kelas saudara kandung???
+
+//////////////////
+10. (20121130) pada halaman page_update_adm_siswa.php dan juga halaman yang lainnya, ada query select (yg 'where'nya dapat dari method GET), buat 'if' untuk terpenuhi atau tidaknya query itu. jangan langsung di fetch_array boss.... buat aja includenya kayak redirect page
+
+
+//////////////////
+11. (20121203) include/period.php variable 'period' terpaksa dirubah jadi 'periode', tapi banyak halaman yang terlanjur menggunakan 'period'. tapi gak apa, sebab kedepannya bakal jadi masalah kalo gak dirubah jadi 'periode'. cek halaman apa aja yg kudu dirubah.?????? Oh,.. ternyata nama filenya juga dirubah jadi 'periode.php'
+
+
+/////////////////
+12. (20120712) table siswa finance, field kat_status_anak kenapa kosong? gak kerecord
+
+
+/////////////
+13. (20130125) di phpmyadmin table set_cat_adm_bi_ma itu field level diganti jadi jenjang, maka dari itu nanti di cek halaman proc_cat_adm_bi_ma_edit, proc_cat_adm_bi_ma_setting dan page_cat_adm_bi_ma_edit 
